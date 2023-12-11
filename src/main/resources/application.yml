@@ -1,0 +1,19 @@
+gateway:
+  host: ${GATEWAY_HOST:https://dev.env.com}
+  path: /v1/
+  port: 80
+  log.all: false
+identity:
+  host: ${IDENTITY_HOST}
+  path: /oauth2/access_token
+  formparams:
+    grant_type: client_credentials
+    scope: test
+    expires_in: 3600
+  Authentication:
+    username: ${TEST_USER_ID}
+    password: ${USER_PASSWORD}
+spring:
+  output:
+    ansi:
+      enabled: always

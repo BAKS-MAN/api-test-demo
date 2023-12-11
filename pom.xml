@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>api-test-demo</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+      <version>2.7.11</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <version>2.7.11</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>spring-mock-mvc</artifactId>
+      <version>${spring.mock.mvc.version}</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>rest-assured</artifactId>
+          <groupId>io.rest-assured</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>${rest-assured.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured-all</artifactId>
+      <version>${rest-assured.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.jupiter.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>${assertj.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <version>${awaitility.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-junit5</artifactId>
+      <version>${allure.junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-rest-assured</artifactId>
+      <version>${allure.junit.version}</version>
+    </dependency>
+  </dependencies>
+  <description>API testing demo project</description>
+  <groupId>com.baks.io</groupId>
+  <name>api-tests</name>
+  <parent>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <groupId>org.springframework.boot</groupId>
+    <relativePath/>
+    <version>2.7.11</version> <!-- lookup parent from repository -->
+  </parent>
+
+  <properties>
+    <allure.junit.version>2.22.0</allure.junit.version>
+    <allure.maven.version>2.12.0</allure.maven.version>
+    <aspectj.version>1.9.7</aspectj.version>
+    <assertj.version>3.24.2</assertj.version>
+    <awaitility.version>4.2.0</awaitility.version>
+    <checkstyle.version>10.11.0</checkstyle.version>
+    <jackson.version>2.15.0</jackson.version>
+    <java.version>11</java.version>
+    <junit.jupiter.version>5.9.3</junit.jupiter.version>
+    <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+    <maven.checkstyle.plugin.version>3.2.2</maven.checkstyle.plugin.version>
+    <maven.version>3.1.0</maven.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <rest-assured.version>4.5.1</rest-assured.version>
+    <spring.mock.mvc.version>5.2.0</spring.mock.mvc.version>
+    <threads.count>5</threads.count>
+  </properties>
+
+  <version>1.1</version>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <release>${java.version}</release>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven.version}</version>
+        <configuration>
+          <systemPropertyVariables>
+            <project.basedir>${project.basedir}</project.basedir>
+          </systemPropertyVariables>
+          <testFailureIgnore>false</testFailureIgnore>
+          <properties>
+            <property>
+              <name>listener</name>
+              <value>io.qameta.allure.junit5.AllureJunit5</value>
+            </property>
+            <configurationParameters>
+              junit.jupiter.execution.parallel.enabled=true
+              junit.jupiter.execution.parallel.mode.default=same_thread
+              junit.jupiter.execution.parallel.mode.classes.default=concurrent
+            </configurationParameters>
+          </properties>
+          <argLine>
+            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+          </argLine>
+          <systemProperties>
+            <property>
+              <name>allure.results.directory</name>
+              <value>${project.basedir}/target/allure-results</value>
+            </property>
+            <property>
+              <name>junit.jupiter.extensions.autodetection.enabled</name>
+              <value>true</value>
+            </property>
+          </systemProperties>
+          <reportFormat>plain</reportFormat>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>${allure.maven.version}</version>
+        <configuration>
+          <reportVersion>${allure.junit.version}</reportVersion>
+          <resultsDirectory>${project.basedir}/target/allure-results</resultsDirectory>
+          <inputDirectories>${project.basedir}/target/allure-results</inputDirectories>
+          <reportingOutputDirectory>${project.basedir}/target/allure-results
+          </reportingOutputDirectory>
+
+        </configuration>
+      </plugin>
+      <!-- Checkstyle plugin to check for Google Java code style. Will fail the build if code is out of style. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${maven.checkstyle.plugin.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>${checkstyle.version}</version>
+          </dependency>
+        </dependencies>
+
+        <executions>
+          <execution>
+            <id>validate</id>
+            <phase>validate</phase>
+            <configuration>
+              <configLocation>checkstyle-checker.xml</configLocation>
+              <consoleOutput>true</consoleOutput>
+              <failOnViolation>true</failOnViolation>
+              <violationSeverity>warning</violationSeverity>
+              <includeTestSourceDirectory>true</includeTestSourceDirectory>
+              <maxAllowedViolations>0</maxAllowedViolations>
+            </configuration>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

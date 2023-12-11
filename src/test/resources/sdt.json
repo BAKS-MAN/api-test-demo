@@ -1,0 +1,65 @@
+{
+  "version": 4,
+  "systemDocumentTypeList": [
+    {
+      "sdtId": "9c6fb11b-7b35-436c-9017-f088e58f1a20",
+      "sdtName": "Resume",
+      "defaultCategoryCode": "RESUME",
+      "countryCode": "US",
+      "retentionPeriod": -1,
+      "metadata": [
+        {
+          "key": "jobName",
+          "name": "Job Name this resume applies to",
+          "type": "String",
+          "required": false
+        }
+      ]
+    },
+    {
+      "sdtId": "171f24a9-6114-45c2-a755-7f7a771eb946",
+      "sdtName": "AQA document",
+      "defaultCategoryCode": "AQATEST",
+      "countryCode": "US",
+      "retentionPeriod": 7,
+      "metadata": [
+        {
+          "key": "label",
+          "name": "Document label",
+          "required": true,
+          "type": "String"
+        },
+        {
+          "key": "demoDate",
+          "name": "Date for document to be demoed",
+          "required": false,
+          "type": "Date"
+        },
+        {
+          "key": "deadlineDateTime",
+          "name": "Date for document to be completed",
+          "required": false,
+          "type": "DateTime"
+        },
+        {
+          "key": "editQty",
+          "name": "Number of edits",
+          "required": false,
+          "type": "Integer"
+        },
+        {
+          "key": "completenessStatus",
+          "name": "Document completeness status",
+          "required": false,
+          "type": "Decimal"
+        },
+        {
+          "key": "importantDocument",
+          "name": "Is document important",
+          "required": false,
+          "type": "Boolean"
+        }
+      ]
+    }
+  ]
+}

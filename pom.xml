@@ -83,8 +83,9 @@
       <version>${allure.junit.version}</version>
     </dependency>
   </dependencies>
+
   <description>API testing demo project</description>
-  <groupId>com.baks.io</groupId>
+  <groupId>com.baks</groupId>
   <name>api-tests</name>
   <parent>
     <artifactId>spring-boot-starter-parent</artifactId>
